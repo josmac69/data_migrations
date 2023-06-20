@@ -67,5 +67,7 @@ services:
       # it contains already existing configuration files
       # without them nifi will not start
       # - ./nifi/conf:/opt/nifi/nifi-current/conf
+      - ./nifi/data_inputs:/opt/nifi/nifi-current/data_inputs
+      - ./nifi/data_outputs:/opt/nifi/nifi-current/data_outputs
     networks:
       - data_migrations
