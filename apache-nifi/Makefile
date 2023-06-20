@@ -7,4 +7,14 @@ show-login:
 run-bash:
 	docker exec -it nifi /bin/bash
 
-.PHONY: show-login run-bash
+run-psql:
+	docker exec -it postgres psql -U postgres -d pgmain
+
+run-mysql-cli:
+	docker exec -it mysql mysql -u root -proot_password
+
+.PHONY: show-login \
+	run-bash \
+	run-psql \
+	run-mysql-cli
+

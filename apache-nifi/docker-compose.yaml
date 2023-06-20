@@ -11,7 +11,7 @@ services:
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: mysql_database
+      MYSQL_DATABASE: mysqlmain
       MYSQL_USER: mysql_user
       MYSQL_PASSWORD: mysql_password
     volumes:
@@ -25,9 +25,9 @@ services:
     image: postgres:latest
     container_name: postgres
     environment:
-      POSTGRES_PASSWORD: postgres_password
-      POSTGRES_USER: postgres_user
-      POSTGRES_DB: postgres_database
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: pgmain
     volumes:
       - ./postgres_init:/docker-entrypoint-initdb.d
     networks:
@@ -41,7 +41,7 @@ services:
     #restart: always
     # environment:
     #   - NIFI_WEB_HTTP_HOST='0.0.0.0'
-    #   - NIFI_WEB_HTTP_PORT=8080
+    #   - NIFI_WEB_HTTP_PORT=8080•••••••
     #   - NIFI_WEB_HTTPS_PORT=8443
     #   - SINGLE_USER_CREDENTIALS_USERNAME=admin
     #   - SINGLE_USER_CREDENTIALS_PASSWORD=admin
