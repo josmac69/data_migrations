@@ -7,5 +7,13 @@ create-env:
 clean:
 	docker ps -aq | xargs -I {} docker rm -f {}
 
-.PHONY: create-env \
+start: create-env
+	docker compose up -d
+
+stop:
+	docker compose down
+
+.PHONY: start \
+	stop \
+	create-env \
 	clean

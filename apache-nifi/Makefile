@@ -1,9 +1,10 @@
 include ../Makefile
 
-start:
-	docker compose up -d
+show-login:
+	docker ps
+	docker exec -it nifi /bin/bash -c "cat /opt/nifi/nifi-current/logs/nifi-app.log |grep Generated|tail -n 2"
 
-stop:
-	docker compose down
+run-bash:
+	docker exec -it nifi /bin/bash
 
-.PHONY: start stop
+.PHONY: show-login run-bash

@@ -38,12 +38,24 @@ services:
   nifi:
     image: apache/nifi:latest
     container_name: nifi
-    restart: always
-    environment:
-      - NIFI_WEB_HTTP_HOST='0.0.0.0'
-      - NIFI_WEB_HTTP_PORT=8080
+    #restart: always
+    # environment:
+    #   - NIFI_WEB_HTTP_HOST='0.0.0.0'
+    #   - NIFI_WEB_HTTP_PORT=8080
+    #   - NIFI_WEB_HTTPS_PORT=8443
+    #   - SINGLE_USER_CREDENTIALS_USERNAME=admin
+    #   - SINGLE_USER_CREDENTIALS_PASSWORD=admin
     ports:
-      - 8080:8080
+      # HTTP
+      - 8080:8080/tcp
+      # HTTPS
+      - 8443:8443/tcp
+      # Remote Input Socket
+      - 10000:10000/tcp
+      # JVM Debugger
+      - 8000:8000/tcp
+      # Cluster Node Protocol
+      #- 11443:11443/tcp
     volumes:
       - ./nifi/database_repository:/opt/nifi/nifi-current/database_repository
       - ./nifi/flowfile_repository:/opt/nifi/nifi-current/flowfile_repository
@@ -51,6 +63,9 @@ services:
       - ./nifi/provenance_repository:/opt/nifi/nifi-current/provenance_repository
       - ./nifi/state:/opt/nifi/nifi-current/state
       - ./nifi/logs:/opt/nifi/nifi-current/logs
-      - ./nifi/conf:/opt/nifi/nifi-current/conf
+      # conf directory cannot be mounted as a volume
+      # it contains already existing configuration files
+      # without them nifi will not start
+      # - ./nifi/conf:/opt/nifi/nifi-current/conf
     networks:
       - data_migrations

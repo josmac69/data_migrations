@@ -1,0 +1,44 @@
+version: '3.8'
+
+networks:
+  data_migrations:
+    name: data_migrations
+    driver: bridge
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: mysql_database
+      MYSQL_USER: mysql_user
+      MYSQL_PASSWORD: mysql_password
+    volumes:
+      - ./mysql_init:/docker-entrypoint-initdb.d
+    networks:
+      - data_migrations
+    ports:
+      - 3306:3306
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_USER: postgres_user
+      POSTGRES_DB: postgres_database
+    volumes:
+      - ./postgres_init:/docker-entrypoint-initdb.d
+    networks:
+      - data_migrations
+    ports:
+      - 5432:5432
+
+  talend:
+    image: talend/data-integration:latest
+    container_name: talend
+    volumes:
+      - ./talend:/home/talend
+    networks:
+      - data_migrations
